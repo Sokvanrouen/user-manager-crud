@@ -1,11 +1,12 @@
 <?php
-$host = 'localhost';
-$dbname = 'crud_db';
-$username = 'root';
-$password = '';
+$host = getenv('MYSQL_HOST');
+$dbname = getenv('MYSQL_DATABASE');
+$username = getenv('MYSQL_USER');
+$password = getenv('MYSQL_PASSWORD');
+$port = getenv('MYSQL_PORT') ?: 3306;
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
@@ -150,4 +151,5 @@ $users = $pdo->query("SELECT * FROM users ORDER BY id DESC")->fetchAll(PDO::FETC
     </section>
 </div>
 </body>
+
 </html>
